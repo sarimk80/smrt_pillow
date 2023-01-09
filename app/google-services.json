@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "389159465389",
+    "project_id": "fypsmartpillow-2a14f",
+    "storage_bucket": "fypsmartpillow-2a14f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:389159465389:android:43bb5e332b04eff8ee7124",
+        "android_client_info": {
+          "package_name": "com.example.smartpilow"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "389159465389-3683e5oquidmbdp37p0jur4i6fmeeglj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.smartpilow",
+            "certificate_hash": "fea7574e2cdfbcf1c350c278b0d60307ce324f38"
+          }
+        },
+        {
+          "client_id": "389159465389-d3mipt3pj56c8pe4s9j5g88trfdph8eg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.smartpilow",
+            "certificate_hash": "6d39f178041f96f9d373d2915bdbd5603ffd664b"
+          }
+        },
+        {
+          "client_id": "389159465389-gf3loj24e9vv94hbuhkq9vt87qveqrpo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDgeOShDjqsvfqDmGmsza-1A7z3y6b0gxc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "389159465389-gf3loj24e9vv94hbuhkq9vt87qveqrpo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
