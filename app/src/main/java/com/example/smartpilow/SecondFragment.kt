@@ -17,12 +17,18 @@ import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.example.smartpilow.adapter.ListAdpater
 import com.example.smartpilow.models.Feed
 import com.example.smartpilow.models.SmartPillowModel
 import com.example.smartpilow.services.RetrofitHelper
 import com.example.smartpilow.services.SmartPillowApi
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObjects
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.messaging.ktx.messaging
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -44,19 +50,63 @@ class SecondFragment : Fragment() {
             savedInstanceState: Bundle?
     ): View? {
 
+        db.collection("readings")
+            .orderBy("entry_id", Query.Direction.ASCENDING)
+            .get()
 
+
+            .addOnSuccessListener { result ->
+
+                val customResult = result.toObjects<Feed>()
+
+                view?.findViewById<TextView>(R.id.heart_beat)?.text = "HeartBeat " + customResult.last().field1
+                view?.findViewById<TextView>(R.id.temperature)?.text = "Temperature " + customResult.last().field2
+                view?.findViewById<TextView>(R.id.is_sleeping)?.text = "Is sleeping " + customResult.last().field3
+
+
+            }
+            .addOnFailureListener { result ->
+                Toast.makeText(context, result.toString(),
+                    Toast.LENGTH_LONG).show()
+            }
         // Inflate the layout for this fragment
 
-        createNotificationChannel()
-        val smartPillowApi = RetrofitHelper.getInstance().create(SmartPillowApi::class.java)
+//        createNotificationChannel()
+//        val smartPillowApi = RetrofitHelper.getInstance().create(SmartPillowApi::class.java)
+//
+//
+//        GlobalScope.launch {
+//            val result = smartPillowApi.getData()
+//
+//            getResponse(result)
+//
+//        }
 
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w("TAG", "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
 
-        GlobalScope.launch {
-            val result = smartPillowApi.getData()
+            // Get new FCM registration token
+            val token = task.result
 
-            getResponse(result)
+            // Log and toast
+           // val msg = getString(0, token)
+            Log.d("TAG", token)
+            Toast.makeText(context, token, Toast.LENGTH_SHORT).show()
+        })
 
-        }
+        Firebase.messaging.subscribeToTopic("Testing")
+            .addOnCompleteListener { task ->
+                var msg = "Subscribed"
+                if (!task.isSuccessful) {
+                    msg = "Subscribe failed"
+                }
+                Log.d("TAG", msg)
+                Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+            }
+
 
         return inflater.inflate(R.layout.fragment_second, container, false)
     }

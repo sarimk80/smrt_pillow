@@ -12,6 +12,7 @@ import android.widget.Toolbar
 import androidx.navigation.fragment.findNavController
 import com.example.smartpilow.adapter.ListAdpater
 import com.example.smartpilow.models.Feed
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObjects
 import com.google.firebase.ktx.Firebase
@@ -41,7 +42,9 @@ class ThirdFragment : Fragment() {
         val listView = view.findViewById<ListView>(R.id.list)
 
         db.collection("readings")
+            .orderBy("entry_id",Query.Direction.DESCENDING)
             .get()
+
 
             .addOnSuccessListener { result ->
 
